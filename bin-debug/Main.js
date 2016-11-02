@@ -26,50 +26,40 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-
-class Main extends egret.DisplayObjectContainer {
-
-    /**
-     * 加载进度界面
-     * Process interface loading
-     */
-    private loadingView:LoadingUI;
-
-    public constructor() {
-        super();
+var Main = (function (_super) {
+    __extends(Main, _super);
+    function Main() {
+        _super.call(this);
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
-
-    private onAddToStage(event:egret.Event) {
+    var d = __define,c=Main,p=c.prototype;
+    p.onAddToStage = function (event) {
         //设置加载进度界面
         //Config to load process interface
         this.loadingView = new LoadingUI();
         this.stage.addChild(this.loadingView);
-
         //初始化Resource资源加载库
         //initiate Resource loading library
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/");
-    }
-
+    };
     /**
      * 配置文件加载完成,开始预加载preload资源组。
      * configuration file loading is completed, start to pre-load the preload resource group
      */
-    private onConfigComplete(event:RES.ResourceEvent):void {
+    p.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
         RES.addEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
         RES.loadGroup("preload");
-    }
-
+    };
     /**
      * preload资源组加载完成
      * Preload resource group is loaded
      */
-    private onResourceLoadComplete(event:RES.ResourceEvent):void {
+    p.onResourceLoadComplete = function (event) {
         if (event.groupName == "preload") {
             this.stage.removeChild(this.loadingView);
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
@@ -78,116 +68,108 @@ class Main extends egret.DisplayObjectContainer {
             RES.removeEventListener(RES.ResourceEvent.ITEM_LOAD_ERROR, this.onItemLoadError, this);
             this.createGameScene();
         }
-    }
-
+    };
     /**
      * 资源组加载出错
      *  The resource group loading failed
      */
-    private onItemLoadError(event:RES.ResourceEvent):void {
+    p.onItemLoadError = function (event) {
         console.warn("Url:" + event.resItem.url + " has failed to load");
-    }
-
+    };
     /**
      * 资源组加载出错
      *  The resource group loading failed
      */
-    private onResourceLoadError(event:RES.ResourceEvent):void {
+    p.onResourceLoadError = function (event) {
         //TODO
         console.warn("Group:" + event.groupName + " has failed to load");
         //忽略加载失败的项目
         //Ignore the loading failed projects
         this.onResourceLoadComplete(event);
-    }
-
+    };
     /**
      * preload资源组加载进度
      * Loading process of preload resource group
      */
-    private onResourceProgress(event:RES.ResourceEvent):void {
+    p.onResourceProgress = function (event) {
         if (event.groupName == "preload") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }
-    }
-
-    private textfield:egret.TextField;
-
+    };
     /**
      * 创建游戏场景
      * Create a game scene
      */
-    private createGameScene():void {
-        var sky:egret.Bitmap = this.createBitmapByName("bg_jpg");
+    p.createGameScene = function () {
+        var sky = this.createBitmapByName("bg_jpg");
         this.addChild(sky);
-        var stageW:number = this.stage.stageWidth;
-        var stageH:number = this.stage.stageHeight;
+        var stageW = this.stage.stageWidth;
+        var stageH = this.stage.stageHeight;
         sky.width = stageW;
         sky.height = stageH;
-
-
-    
-
-
-
-
-
+        var grid = new Grid(10, 10);
+        grid.setWalkable(3, 2, false);
+        grid.setWalkable(3, 7, false);
+        grid.setWalkable(4, 2, false);
+        grid.setWalkable(4, 7, false);
+        grid.setWalkable(5, 2, false);
+        grid.setWalkable(5, 7, false);
+        grid.setWalkable(6, 2, false);
+        grid.setWalkable(6, 3, false);
+        grid.setWalkable(6, 4, false);
+        grid.setWalkable(6, 5, false);
+        grid.setWalkable(6, 6, false);
+        grid.setWalkable(6, 7, false);
+        this.addChild(new myMap);
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        RES.getResAsync("description_json", this.startAnimation, this)
-    }
-
+        RES.getResAsync("description_json", this.startAnimation, this);
+    };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
      * Create a Bitmap object according to name keyword.As for the property of name please refer to the configuration file of resources/resource.json.
      */
-    private createBitmapByName(name:string):egret.Bitmap {
+    p.createBitmapByName = function (name) {
         var result = new egret.Bitmap();
-        var texture:egret.Texture = RES.getRes(name);
+        var texture = RES.getRes(name);
         result.texture = texture;
         return result;
-    }
-
+    };
     /**
      * 描述文件加载成功，开始播放动画
      * Description file loading is successful, start to play the animation
      */
-    private startAnimation(result:Array<any>):void {
-        var self:any = this;
-
+    p.startAnimation = function (result) {
+        var self = this;
         var parser = new egret.HtmlTextParser();
-        var textflowArr:Array<Array<egret.ITextElement>> = [];
-        for (var i:number = 0; i < result.length; i++) {
+        var textflowArr = [];
+        for (var i = 0; i < result.length; i++) {
             textflowArr.push(parser.parser(result[i]));
         }
-
         var textfield = self.textfield;
         var count = -1;
-        var change:Function = function () {
+        var change = function () {
             count++;
             if (count >= textflowArr.length) {
                 count = 0;
             }
             var lineArr = textflowArr[count];
-
             self.changeDescription(textfield, lineArr);
-
             var tw = egret.Tween.get(textfield);
-            tw.to({"alpha": 1}, 200);
+            tw.to({ "alpha": 1 }, 200);
             tw.wait(2000);
-            tw.to({"alpha": 0}, 200);
+            tw.to({ "alpha": 0 }, 200);
             tw.call(change, self);
         };
-
         change();
-    }
-
+    };
     /**
      * 切换描述内容
      * Switch to described content
      */
-    private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void {
+    p.changeDescription = function (textfield, textFlow) {
         textfield.textFlow = textFlow;
-    }
-}
-
-
+    };
+    return Main;
+}(egret.DisplayObjectContainer));
+egret.registerClass(Main,'Main');

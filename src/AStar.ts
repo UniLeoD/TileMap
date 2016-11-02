@@ -129,3 +129,4 @@ class AStar {
              return this._diagCost * diag + this._straightCost * (straight - 2 * diag); 
             
         }
+}
