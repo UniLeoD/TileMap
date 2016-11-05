@@ -107,7 +107,7 @@ var myMap = (function (_super) {
             { x: 9, y: 9, walkable: true, image: "Grass_jpg" },
         ];
         for (var i = 0; i < this.config.length; i++) {
-            var tiledata = new TileData(this.config[i].walkable, this.config[i].image, this.config[i].x, this.config[i].y);
+            var tiledata = new TileData(this.config[i].x, this.config[i].y, this.config[i].walkable, this.config[i].image);
             var bitmap = new Tile(tiledata);
             this.addChild(bitmap);
         }
@@ -118,16 +118,16 @@ var myMap = (function (_super) {
 egret.registerClass(myMap,'myMap');
 var Tile = (function (_super) {
     __extends(Tile, _super);
-    function Tile(data) {
+    function Tile(tiledata) {
         _super.call(this);
-        this.data = data;
+        this.tiledata = tiledata;
         var bitmap = new egret.Bitmap();
         this.addChild(bitmap);
-        bitmap.texture = RES.getRes(data.image);
+        bitmap.texture = RES.getRes(tiledata.image);
         bitmap.height = Tile.TILE_SIZE;
         bitmap.width = Tile.TILE_SIZE;
-        bitmap.x = data.x * Tile.TILE_SIZE;
-        bitmap.y = data.y * Tile.TILE_SIZE;
+        bitmap.x = tiledata.x * Tile.TILE_SIZE;
+        bitmap.y = tiledata.y * Tile.TILE_SIZE;
     }
     var d = __define,c=Tile,p=c.prototype;
     Tile.TILE_SIZE = 64;
@@ -136,12 +136,12 @@ var Tile = (function (_super) {
 egret.registerClass(Tile,'Tile');
 var TileData = (function (_super) {
     __extends(TileData, _super);
-    function TileData(walkable, image, x, y) {
+    function TileData(x, y, walkable, image) {
         _super.call(this);
-        this.walkable = walkable;
-        this.image = image;
         this.x = x;
         this.y = y;
+        this.walkable = walkable;
+        this.image = image;
     }
     var d = __define,c=TileData,p=c.prototype;
     return TileData;

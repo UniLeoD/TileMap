@@ -124,7 +124,7 @@ class myMap extends egret.DisplayObjectContainer {
 
         ]
   for (var i = 0; i < this.config.length; i++) {
-            var tiledata: TileData = new TileData(this.config[i].walkable, this.config[i].image, this.config[i].x, this.config[i].y);
+            var tiledata: TileData = new TileData(this.config[i].x, this.config[i].y, this.config[i].walkable, this.config[i].image);
             var bitmap: Tile = new Tile(tiledata);
             this.addChild(bitmap);
         }
@@ -134,28 +134,29 @@ class myMap extends egret.DisplayObjectContainer {
 
 class Tile extends egret.DisplayObjectContainer {
     public static TILE_SIZE = 64;
-    data: TileData;
-    constructor(data: TileData) {
+    tiledata: TileData;
+    constructor(tiledata: TileData) {
         super();
-        this.data = data;
+        this.tiledata = tiledata;
         var bitmap = new egret.Bitmap();
         this.addChild(bitmap);
-        bitmap.texture = RES.getRes(data.image);
+        bitmap.texture = RES.getRes(tiledata.image);
         bitmap.height = Tile.TILE_SIZE;
         bitmap.width = Tile.TILE_SIZE;
-        bitmap.x = data.x * Tile.TILE_SIZE;
-        bitmap.y = data.y * Tile.TILE_SIZE;
+        bitmap.x = tiledata.x * Tile.TILE_SIZE;
+        bitmap.y = tiledata.y * Tile.TILE_SIZE;
     }
 }
 
 class TileData extends egret.DisplayObjectContainer {
     public walkable: boolean;
     public image: string;
-    constructor(walkable: boolean, image: string, x: number, y: number) {
+    constructor(x: number, y: number, walkable: boolean, image: string) {
         super();
-        this.walkable = walkable;
-        this.image = image;
         this.x = x;
         this.y = y;
+        this.walkable = walkable;
+        this.image = image;
+        
     }
 }
