@@ -117,14 +117,9 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene():void {
-        var sky:egret.Bitmap = this.createBitmapByName("bg_jpg");
-        this.addChild(sky);
-        var stageW:number = this.stage.stageWidth;
-        var stageH:number = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
+        
 
-        var grid = new Grid(10,10);
+    /*    var grid = new Grid(10,10);
         grid.setWalkable(3, 2, false);
         grid.setWalkable(3, 7, false);
         grid.setWalkable(4, 2, false);
@@ -138,9 +133,9 @@ class Main extends egret.DisplayObjectContainer {
         grid.setWalkable(6, 5, false);
         grid.setWalkable(6, 6, false);
         grid.setWalkable(6, 7, false);
+      */  
         
-        
-        this.addChild(new myMap);
+        this.addChild(new myMap());
 
 
 
@@ -148,7 +143,7 @@ class Main extends egret.DisplayObjectContainer {
 
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        RES.getResAsync("description_json", this.startAnimation, this)
+    //    RES.getResAsync("description_json", this.startAnimation, this)
     }
 
     /**
@@ -166,7 +161,7 @@ class Main extends egret.DisplayObjectContainer {
      * 描述文件加载成功，开始播放动画
      * Description file loading is successful, start to play the animation
      */
-    private startAnimation(result:Array<any>):void {
+/*    private startAnimation(result:Array<any>):void {
         var self:any = this;
 
         var parser = new egret.HtmlTextParser();
@@ -195,14 +190,14 @@ class Main extends egret.DisplayObjectContainer {
 
         change();
     }
-
+*/
     /**
      * 切换描述内容
      * Switch to described content
      */
-    private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void {
+ /*   private changeDescription(textfield:egret.TextField, textFlow:Array<egret.ITextElement>):void {
         textfield.textFlow = textFlow;
-    }
+    }*/
 }
 
 

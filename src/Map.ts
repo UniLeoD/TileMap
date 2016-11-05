@@ -78,7 +78,7 @@ class myMap extends egret.DisplayObjectContainer {
 
             { x: 6, y: 0, walkable: true, image: "Grass_jpg" },
             { x: 6, y: 1, walkable: true, image: "Grass_jpg" },
-            { x: 5, y: 2, walkable: false, image: "Box_jpg" },
+            { x: 6, y: 2, walkable: false, image: "Box_jpg" },
             { x: 6, y: 3, walkable: false, image: "Box_jpg" },
             { x: 6, y: 4, walkable: false, image: "Box_jpg" },
             { x: 6, y: 5, walkable: false, image: "Box_jpg" },
@@ -87,7 +87,7 @@ class myMap extends egret.DisplayObjectContainer {
             { x: 6, y: 8, walkable: true, image: "Grass_jpg" },
             { x: 6, y: 9, walkable: true, image: "Grass_jpg" },
 
-            
+
             { x: 7, y: 0, walkable: true, image: "Grass_jpg" },
             { x: 7, y: 1, walkable: true, image: "Grass_jpg" },
             { x: 7, y: 2, walkable: true, image: "Grass_jpg" },
@@ -98,7 +98,7 @@ class myMap extends egret.DisplayObjectContainer {
             { x: 7, y: 7, walkable: true, image: "Grass_jpg" },
             { x: 7, y: 8, walkable: true, image: "Grass_jpg" },
             { x: 7, y: 9, walkable: true, image: "Grass_jpg" },
-            
+
             { x: 8, y: 0, walkable: true, image: "Grass_jpg" },
             { x: 8, y: 1, walkable: true, image: "Grass_jpg" },
             { x: 8, y: 2, walkable: true, image: "Grass_jpg" },
@@ -110,7 +110,7 @@ class myMap extends egret.DisplayObjectContainer {
             { x: 8, y: 8, walkable: true, image: "Grass_jpg" },
             { x: 8, y: 9, walkable: true, image: "Grass_jpg" },
 
-            
+
             { x: 9, y: 0, walkable: true, image: "Grass_jpg" },
             { x: 9, y: 1, walkable: true, image: "Grass_jpg" },
             { x: 9, y: 2, walkable: true, image: "Grass_jpg" },
@@ -121,17 +121,19 @@ class myMap extends egret.DisplayObjectContainer {
             { x: 9, y: 7, walkable: true, image: "Grass_jpg" },
             { x: 9, y: 8, walkable: true, image: "Grass_jpg" },
             { x: 9, y: 9, walkable: true, image: "Grass_jpg" },
-            
-
 
         ]
-    
-}
+  for (var i = 0; i < this.config.length; i++) {
+            var tiledata: TileData = new TileData(this.config[i].walkable, this.config[i].image, this.config[i].x, this.config[i].y);
+            var bitmap: Tile = new Tile(tiledata);
+            this.addChild(bitmap);
+        }
+    }
 }
 
 
 class Tile extends egret.DisplayObjectContainer {
-    public static TILE_SIZE = 32;
+    public static TILE_SIZE = 64;
     data: TileData;
     constructor(data: TileData) {
         super();

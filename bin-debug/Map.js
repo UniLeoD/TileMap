@@ -67,7 +67,7 @@ var myMap = (function (_super) {
             { x: 5, y: 9, walkable: true, image: "Grass_jpg" },
             { x: 6, y: 0, walkable: true, image: "Grass_jpg" },
             { x: 6, y: 1, walkable: true, image: "Grass_jpg" },
-            { x: 5, y: 2, walkable: false, image: "Box_jpg" },
+            { x: 6, y: 2, walkable: false, image: "Box_jpg" },
             { x: 6, y: 3, walkable: false, image: "Box_jpg" },
             { x: 6, y: 4, walkable: false, image: "Box_jpg" },
             { x: 6, y: 5, walkable: false, image: "Box_jpg" },
@@ -106,6 +106,11 @@ var myMap = (function (_super) {
             { x: 9, y: 8, walkable: true, image: "Grass_jpg" },
             { x: 9, y: 9, walkable: true, image: "Grass_jpg" },
         ];
+        for (var i = 0; i < this.config.length; i++) {
+            var tiledata = new TileData(this.config[i].walkable, this.config[i].image, this.config[i].x, this.config[i].y);
+            var bitmap = new Tile(tiledata);
+            this.addChild(bitmap);
+        }
     }
     var d = __define,c=myMap,p=c.prototype;
     return myMap;
@@ -125,7 +130,7 @@ var Tile = (function (_super) {
         bitmap.y = data.y * Tile.TILE_SIZE;
     }
     var d = __define,c=Tile,p=c.prototype;
-    Tile.TILE_SIZE = 32;
+    Tile.TILE_SIZE = 64;
     return Tile;
 }(egret.DisplayObjectContainer));
 egret.registerClass(Tile,'Tile');

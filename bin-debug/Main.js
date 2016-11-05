@@ -101,29 +101,25 @@ var Main = (function (_super) {
      * Create a game scene
      */
     p.createGameScene = function () {
-        var sky = this.createBitmapByName("bg_jpg");
-        this.addChild(sky);
-        var stageW = this.stage.stageWidth;
-        var stageH = this.stage.stageHeight;
-        sky.width = stageW;
-        sky.height = stageH;
-        var grid = new Grid(10, 10);
-        grid.setWalkable(3, 2, false);
-        grid.setWalkable(3, 7, false);
-        grid.setWalkable(4, 2, false);
-        grid.setWalkable(4, 7, false);
-        grid.setWalkable(5, 2, false);
-        grid.setWalkable(5, 7, false);
-        grid.setWalkable(6, 2, false);
-        grid.setWalkable(6, 3, false);
-        grid.setWalkable(6, 4, false);
-        grid.setWalkable(6, 5, false);
-        grid.setWalkable(6, 6, false);
-        grid.setWalkable(6, 7, false);
-        this.addChild(new myMap);
+        /*    var grid = new Grid(10,10);
+            grid.setWalkable(3, 2, false);
+            grid.setWalkable(3, 7, false);
+            grid.setWalkable(4, 2, false);
+            grid.setWalkable(4, 7, false);
+            grid.setWalkable(5, 2, false);
+            grid.setWalkable(5, 7, false);
+    
+            grid.setWalkable(6, 2, false);
+            grid.setWalkable(6, 3, false);
+            grid.setWalkable(6, 4, false);
+            grid.setWalkable(6, 5, false);
+            grid.setWalkable(6, 6, false);
+            grid.setWalkable(6, 7, false);
+          */
+        this.addChild(new myMap());
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.
-        RES.getResAsync("description_json", this.startAnimation, this);
+        //    RES.getResAsync("description_json", this.startAnimation, this)
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
@@ -134,41 +130,6 @@ var Main = (function (_super) {
         var texture = RES.getRes(name);
         result.texture = texture;
         return result;
-    };
-    /**
-     * 描述文件加载成功，开始播放动画
-     * Description file loading is successful, start to play the animation
-     */
-    p.startAnimation = function (result) {
-        var self = this;
-        var parser = new egret.HtmlTextParser();
-        var textflowArr = [];
-        for (var i = 0; i < result.length; i++) {
-            textflowArr.push(parser.parser(result[i]));
-        }
-        var textfield = self.textfield;
-        var count = -1;
-        var change = function () {
-            count++;
-            if (count >= textflowArr.length) {
-                count = 0;
-            }
-            var lineArr = textflowArr[count];
-            self.changeDescription(textfield, lineArr);
-            var tw = egret.Tween.get(textfield);
-            tw.to({ "alpha": 1 }, 200);
-            tw.wait(2000);
-            tw.to({ "alpha": 0 }, 200);
-            tw.call(change, self);
-        };
-        change();
-    };
-    /**
-     * 切换描述内容
-     * Switch to described content
-     */
-    p.changeDescription = function (textfield, textFlow) {
-        textfield.textFlow = textFlow;
     };
     return Main;
 }(egret.DisplayObjectContainer));
