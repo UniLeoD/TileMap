@@ -123,7 +123,7 @@ class myMap extends egret.DisplayObjectContainer {
             { x: 9, y: 9, walkable: true, image: "Grass_jpg" },
 
         ]
-  for (var i = 0; i < this.config.length; i++) {
+        for (var i = 0; i < this.config.length; i++) {
             var tiledata: TileData = new TileData(this.config[i].x, this.config[i].y, this.config[i].walkable, this.config[i].image);
             var bitmap: Tile = new Tile(tiledata);
             this.addChild(bitmap);
@@ -157,6 +157,6 @@ class TileData extends egret.DisplayObjectContainer {
         this.y = y;
         this.walkable = walkable;
         this.image = image;
-        
+
     }
 }
