@@ -1,11 +1,10 @@
 class myMap extends egret.DisplayObjectContainer {
 
-    _block: egret.Bitmap;
     config: Array<any>;
-    _column: number = 10;
-    _row: number = 10;
-    _moveX: number[];
-    _moveY: number[];
+    moveX: number[];
+    moveY: number[];
+    player: Character;
+
     constructor() {
         super();
         this.config = [
@@ -125,11 +124,39 @@ class myMap extends egret.DisplayObjectContainer {
         ]
         for (var i = 0; i < this.config.length; i++) {
             var tiledata: TileData = new TileData(this.config[i].x, this.config[i].y, this.config[i].walkable, this.config[i].image);
-            var bitmap: Tile = new Tile(tiledata);
-            this.addChild(bitmap);
+            var tile: Tile = new Tile(tiledata);
+            this.addChild(tile);
         }
+       this.player = new Character();
+       this.addChild(this.player);
+       this.touchEnabled = true;
+       this.addEventListener(egret.TouchEvent.TOUCH_END, (e) => {
+          this.Map_find(e.stageX, e.stageY);
+            //console.log("X:" + e.stageX + "Y:" + e.stageY);
+        }, this);
+    }
+
+    private Map_find(clickX:number, clickY:number) {
+        var bodyX:number = Math.floor(this.player.character.x / Tile.TILE_SIZE);
+        var bodyY: number = Math.floor(this.player.character.y / Tile.TILE_SIZE);
+        var grid = new Grid(10, 10, this.config);
+        var gridX:number = Math.floor(clickX / Tile.TILE_SIZE);
+        var gridY: number = Math.floor(clickY / Tile.TILE_SIZE);
+        grid.setStartNode(bodyX, bodyY);
+        grid.setEndNode(gridX, gridY);
+        var Astar = new AStar();
+        if (Astar.findPath(grid)) {
+            for(var i = 0; i < Astar._path.length; i++) {
+                var targetX: number = Astar._path[i].x * Tile.TILE_SIZE + Tile.TILE_SIZE / 2;
+                var targetY: number = Astar._path[i].y * Tile.TILE_SIZE + Tile.TILE_SIZE /2;
+            }
+            this.player.move(targetX, targetY);
+        }
+
+
     }
 }
+
 
 
 class Tile extends egret.DisplayObjectContainer {
@@ -157,6 +184,5 @@ class TileData extends egret.DisplayObjectContainer {
         this.y = y;
         this.walkable = walkable;
         this.image = image;
-
     }
 }

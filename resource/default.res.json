@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_jpg,egret_icon_png,description_json,Grass_jpg,Box_jpg",
+			"keys": "bg_jpg,egret_icon_png,description_json,Grass_jpg,Box_jpg,man_json,man_png",
 			"name": "preload"
 		}
 	],
@@ -30,6 +30,16 @@
 			"name": "Box_jpg",
 			"type": "image",
 			"url": "assets/Box.jpg"
+		},
+		{
+			"name": "man_json",
+			"type": "json",
+			"url": "assets/man.json"
+		},
+		{
+			"name": "man_png",
+			"type": "image",
+			"url": "assets/man.png"
 		}
 	]
 }

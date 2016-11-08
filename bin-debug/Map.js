@@ -1,9 +1,8 @@
 var myMap = (function (_super) {
     __extends(myMap, _super);
     function myMap() {
+        var _this = this;
         _super.call(this);
-        this._column = 10;
-        this._row = 10;
         this.config = [
             { x: 0, y: 0, walkable: true, image: "Grass_jpg" },
             { x: 0, y: 1, walkable: true, image: "Grass_jpg" },
@@ -108,11 +107,35 @@ var myMap = (function (_super) {
         ];
         for (var i = 0; i < this.config.length; i++) {
             var tiledata = new TileData(this.config[i].x, this.config[i].y, this.config[i].walkable, this.config[i].image);
-            var bitmap = new Tile(tiledata);
-            this.addChild(bitmap);
+            var tile = new Tile(tiledata);
+            this.addChild(tile);
         }
+        this.player = new Character();
+        this.addChild(this.player);
+        this.touchEnabled = true;
+        this.addEventListener(egret.TouchEvent.TOUCH_END, function (e) {
+            _this.Map_find(e.stageX, e.stageY);
+            //console.log("X:" + e.stageX + "Y:" + e.stageY);
+        }, this);
     }
     var d = __define,c=myMap,p=c.prototype;
+    p.Map_find = function (clickX, clickY) {
+        var bodyX = Math.floor(this.player.character.x / Tile.TILE_SIZE);
+        var bodyY = Math.floor(this.player.character.y / Tile.TILE_SIZE);
+        var grid = new Grid(10, 10, this.config);
+        var gridX = Math.floor(clickX / Tile.TILE_SIZE);
+        var gridY = Math.floor(clickY / Tile.TILE_SIZE);
+        grid.setStartNode(bodyX, bodyY);
+        grid.setEndNode(gridX, gridY);
+        var Astar = new AStar();
+        if (Astar.findPath(grid)) {
+            for (var i = 0; i < Astar._path.length; i++) {
+                var targetX = Astar._path[i].x * Tile.TILE_SIZE + Tile.TILE_SIZE / 2;
+                var targetY = Astar._path[i].y * Tile.TILE_SIZE + Tile.TILE_SIZE / 2;
+            }
+            this.player.move(targetX, targetY);
+        }
+    };
     return myMap;
 }(egret.DisplayObjectContainer));
 egret.registerClass(myMap,'myMap');

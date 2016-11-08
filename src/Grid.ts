@@ -6,7 +6,7 @@ class Grid {
      _numRows: number;
 
 
-    constructor(numCols: number, numRows: number) {
+    constructor(numCols: number, numRows: number, TileData:TileData[]) {
         this._numCols = numCols;
         this._numRows = numRows;
         this._nodes = new Array();

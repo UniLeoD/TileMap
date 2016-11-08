@@ -1,5 +1,5 @@
 var Grid = (function () {
-    function Grid(numCols, numRows) {
+    function Grid(numCols, numRows, TileData) {
         this._numCols = numCols;
         this._numRows = numRows;
         this._nodes = new Array();
