@@ -67,13 +67,14 @@ class PlayerMoveState extends PlayerState {
     _targetY: number;
     constructor(player: Character, targetX: number, targetY: number) {
         super(player);
-        this._targetX = targetX - 130;
-        this._targetY = targetY - 120;
+        this._targetX = targetX - 100;
+        this._targetY = targetY  - 100;
     }
     onEnter() {
+        var time: number = ( Math.sqrt(this._targetX * this._targetX + this._targetY * this._targetY))  ;
         this._player.character.gotoAndPlay("run");
         var tw = egret.Tween.get(this._player.character);
-        tw.to({ x: this._targetX, y: this._targetY }, 500).call(this._player.idle, this._player);
+        tw.to({ x: this._targetX, y: this._targetY }, time).call(this._player.idle, this._player);
  
     }
 }

@@ -120,8 +120,8 @@ var myMap = (function (_super) {
     }
     var d = __define,c=myMap,p=c.prototype;
     p.Map_find = function (clickX, clickY) {
-        var bodyX = Math.floor(this.player.character.x / Tile.TILE_SIZE);
-        var bodyY = Math.floor(this.player.character.y / Tile.TILE_SIZE);
+        var bodyX = Math.floor(this.player.x / Tile.TILE_SIZE);
+        var bodyY = Math.floor(this.player.y / Tile.TILE_SIZE);
         var grid = new Grid(10, 10, this.config);
         var gridX = Math.floor(clickX / Tile.TILE_SIZE);
         var gridY = Math.floor(clickY / Tile.TILE_SIZE);

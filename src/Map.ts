@@ -137,8 +137,8 @@ class myMap extends egret.DisplayObjectContainer {
     }
 
     private Map_find(clickX:number, clickY:number) {
-        var bodyX:number = Math.floor(this.player.character.x / Tile.TILE_SIZE);
-        var bodyY: number = Math.floor(this.player.character.y / Tile.TILE_SIZE);
+        var bodyX:number = Math.floor(this.player.x / Tile.TILE_SIZE);
+        var bodyY: number = Math.floor(this.player.y / Tile.TILE_SIZE);
         var grid = new Grid(10, 10, this.config);
         var gridX:number = Math.floor(clickX / Tile.TILE_SIZE);
         var gridY: number = Math.floor(clickY / Tile.TILE_SIZE);

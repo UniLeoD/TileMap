@@ -50,14 +50,15 @@ var PlayerMoveState = (function (_super) {
     __extends(PlayerMoveState, _super);
     function PlayerMoveState(player, targetX, targetY) {
         _super.call(this, player);
-        this._targetX = targetX - 130;
-        this._targetY = targetY - 120;
+        this._targetX = targetX - 100;
+        this._targetY = targetY - 100;
     }
     var d = __define,c=PlayerMoveState,p=c.prototype;
     p.onEnter = function () {
+        var time = (Math.sqrt(this._targetX * this._targetX + this._targetY * this._targetY));
         this._player.character.gotoAndPlay("run");
         var tw = egret.Tween.get(this._player.character);
-        tw.to({ x: this._targetX, y: this._targetY }, 500).call(this._player.idle, this._player);
+        tw.to({ x: this._targetX, y: this._targetY }, time).call(this._player.idle, this._player);
     };
     return PlayerMoveState;
 }(PlayerState));
