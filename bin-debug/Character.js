@@ -2,6 +2,7 @@ var Character = (function (_super) {
     __extends(Character, _super);
     function Character() {
         _super.call(this);
+        this.movePath = new Array;
         var _mcData = RES.getRes("man_json");
         var _mcTexture = RES.getRes("man_png");
         var _mcDataFactory = new egret.MovieClipDataFactory(_mcData, _mcTexture);
@@ -13,10 +14,12 @@ var Character = (function (_super) {
         this.character.gotoAndPlay("idle", 100);
     }
     var d = __define,c=Character,p=c.prototype;
-    p.move = function (targetX, targetY) {
-        this.PlayerStateMachine.setState(new PlayerMoveState(this, targetX, targetY));
+    p.move = function () {
+        this.PlayerStateMachine.setState(new PlayerMoveState(this));
     };
     p.idle = function () {
+        if (this.movePath.length)
+            this.move();
         this.PlayerStateMachine.setState(new PlayerIdleState(this));
     };
     return Character;
@@ -48,16 +51,18 @@ var PlayerState = (function () {
 egret.registerClass(PlayerState,'PlayerState',["State"]);
 var PlayerMoveState = (function (_super) {
     __extends(PlayerMoveState, _super);
-    function PlayerMoveState(player, targetX, targetY) {
+    function PlayerMoveState(player) {
         _super.call(this, player);
-        this._targetX = targetX - 100;
-        this._targetY = targetY - 100;
+        var temp = player.movePath.pop();
+        this._targetX = temp.x * Tile.TILE_SIZE;
+        this._targetY = temp.y * Tile.TILE_SIZE;
+        console.log("target:" + Math.floor(this._targetX / Tile.TILE_SIZE) + " " + Math.floor(this._targetY / Tile.TILE_SIZE));
     }
     var d = __define,c=PlayerMoveState,p=c.prototype;
     p.onEnter = function () {
         var time = (Math.sqrt(this._targetX * this._targetX + this._targetY * this._targetY));
         this._player.character.gotoAndPlay("run");
-        var tw = egret.Tween.get(this._player.character);
+        var tw = egret.Tween.get(this._player);
         tw.to({ x: this._targetX, y: this._targetY }, time).call(this._player.idle, this._player);
     };
     return PlayerMoveState;

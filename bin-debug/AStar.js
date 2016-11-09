@@ -90,7 +90,7 @@ var AStar = (function () {
         this._path.push(node);
         while (node != this._startNode) {
             node = node.parent;
-            this._path.unshift(node);
+            this._path.push(node);
         }
     };
     p.manhattan = function (node) {

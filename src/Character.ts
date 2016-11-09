@@ -1,32 +1,35 @@
 class Character extends egret.DisplayObjectContainer {
-    character:egret.MovieClip;
+    character: egret.MovieClip;
     PlayerStateMachine: StateMachine;
-    
-    
+    movePath: Array<{ x: number, y: number }> = new Array;
+
+
 
     constructor() {
         super();
         var _mcData = RES.getRes("man_json");
         var _mcTexture = RES.getRes("man_png");
         var _mcDataFactory: egret.MovieClipDataFactory = new egret.MovieClipDataFactory(_mcData, _mcTexture);
-        
-        this.character = new egret.MovieClip( _mcDataFactory.generateMovieClipData( "man" ) );
+
+        this.character = new egret.MovieClip(_mcDataFactory.generateMovieClipData("man"));
         this.character.x = -50;
         this.character.y = -50;
         this.PlayerStateMachine = new StateMachine();
- 
+
 
         this.addChild(this.character);
 
 
-        this.character.gotoAndPlay("idle",100);
+        this.character.gotoAndPlay("idle", 100);
     }
 
-    move(targetX: number, targetY: number) {
-        this.PlayerStateMachine.setState(new PlayerMoveState(this, targetX, targetY));
+    move() {
+        this.PlayerStateMachine.setState(new PlayerMoveState(this));
     }
 
     idle() {
+        if (this.movePath.length)
+            this.move();
         this.PlayerStateMachine.setState(new PlayerIdleState(this));
     }
 }
@@ -58,24 +61,27 @@ class PlayerState implements State {
         this._player = player;
     }
 
-    onEnter() {}
-    onExit() {}
+    onEnter() { }
+    onExit() { }
 }
 
 class PlayerMoveState extends PlayerState {
     _targetX: number;
     _targetY: number;
-    constructor(player: Character, targetX: number, targetY: number) {
+    constructor(player: Character) {
         super(player);
-        this._targetX = targetX - 100;
-        this._targetY = targetY  - 100;
+        var temp = player.movePath.pop();
+        this._targetX = temp.x * Tile.TILE_SIZE;
+        this._targetY = temp.y * Tile.TILE_SIZE;
+        console.log("target:" + Math.floor( this._targetX / Tile.TILE_SIZE) + " " +  Math.floor( this._targetY / Tile.TILE_SIZE));
     }
-    onEnter() {
-        var time: number = ( Math.sqrt(this._targetX * this._targetX + this._targetY * this._targetY))  ;
+    onEnter() {//TODO 
+        var time: number = (Math.sqrt(this._targetX * this._targetX + this._targetY * this._targetY));
         this._player.character.gotoAndPlay("run");
-        var tw = egret.Tween.get(this._player.character);
-        tw.to({ x: this._targetX, y: this._targetY }, time).call(this._player.idle, this._player);
- 
+        var tw = egret.Tween.get(this._player);
+        tw.to({ x: this._targetX, y: this._targetY }, time).call(
+            this._player.idle , this._player);
+
     }
 }
 

@@ -8,5 +8,9 @@ class myNode {
     public  parent:myNode; 
     public  costMultiplier:number = 1.0;
     
-    constructor (x:number, y:number) { this.x = x; this.y = y; } 
+    constructor (data:{ x:number, y:number,walkable:boolean}) {
+         this.x = data.x; 
+         this.y = data.y; 
+         this.walkable = data.walkable;
+        } 
 }

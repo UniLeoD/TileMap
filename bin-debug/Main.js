@@ -101,21 +101,23 @@ var Main = (function (_super) {
      * Create a game scene
      */
     p.createGameScene = function () {
-        /*    var grid = new Grid(10,10);
-            grid.setWalkable(3, 2, false);
-            grid.setWalkable(3, 7, false);
-            grid.setWalkable(4, 2, false);
-            grid.setWalkable(4, 7, false);
-            grid.setWalkable(5, 2, false);
-            grid.setWalkable(5, 7, false);
-    
-            grid.setWalkable(6, 2, false);
-            grid.setWalkable(6, 3, false);
-            grid.setWalkable(6, 4, false);
-            grid.setWalkable(6, 5, false);
-            grid.setWalkable(6, 6, false);
-            grid.setWalkable(6, 7, false);
-          */
+        /*      var map:myMap = new myMap();
+      
+              var grid = new Grid(10,10,map.config);
+              grid.setWalkable(3, 2, false);
+              grid.setWalkable(3, 7, false);
+              grid.setWalkable(4, 2, false);
+              grid.setWalkable(4, 7, false);
+              grid.setWalkable(5, 2, false);
+              grid.setWalkable(5, 7, false);
+      
+              grid.setWalkable(6, 2, false);
+              grid.setWalkable(6, 3, false);
+              grid.setWalkable(6, 4, false);
+              grid.setWalkable(6, 5, false);
+              grid.setWalkable(6, 6, false);
+              grid.setWalkable(6, 7, false);
+        */
         this.addChild(new myMap());
         //根据name关键字，异步获取一个json配置文件，name属性请参考resources/resource.json配置文件的内容。
         // Get asynchronously a json configuration file according to name keyword. As for the property of name please refer to the configuration file of resources/resource.json.

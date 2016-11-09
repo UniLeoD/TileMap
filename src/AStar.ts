@@ -106,7 +106,7 @@ class AStar {
         this._path.push(node);
         while (node != this._startNode) {
             node = node.parent;
-            this._path.unshift(node);
+            this._path.push(node);
         }
     }
         public manhattan(node: myNode): Number {

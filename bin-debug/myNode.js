@@ -1,9 +1,10 @@
 var myNode = (function () {
-    function myNode(x, y) {
+    function myNode(data) {
         this.walkable = true;
         this.costMultiplier = 1.0;
-        this.x = x;
-        this.y = y;
+        this.x = data.x;
+        this.y = data.y;
+        this.walkable = data.walkable;
     }
     var d = __define,c=myNode,p=c.prototype;
     return myNode;

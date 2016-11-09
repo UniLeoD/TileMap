@@ -117,9 +117,9 @@ class Main extends egret.DisplayObjectContainer {
      * Create a game scene
      */
     private createGameScene():void {
-        
+  /*      var map:myMap = new myMap();
 
-    /*    var grid = new Grid(10,10);
+        var grid = new Grid(10,10,map.config);
         grid.setWalkable(3, 2, false);
         grid.setWalkable(3, 7, false);
         grid.setWalkable(4, 2, false);
@@ -133,7 +133,7 @@ class Main extends egret.DisplayObjectContainer {
         grid.setWalkable(6, 5, false);
         grid.setWalkable(6, 6, false);
         grid.setWalkable(6, 7, false);
-      */  
+  */      
         
         this.addChild(new myMap());
 
