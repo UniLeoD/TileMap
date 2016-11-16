@@ -60,7 +60,7 @@ var PlayerMoveState = (function (_super) {
     }
     var d = __define,c=PlayerMoveState,p=c.prototype;
     p.onEnter = function () {
-        var time = (Math.sqrt(this._targetX * this._targetX + this._targetY * this._targetY));
+        var time = (Math.sqrt((this._targetX - this._player.x) * (this._targetX - this._player.x) + (this._targetY - this._player.y) * (this._targetY - this._player.y)));
         this._player.character.gotoAndPlay("run");
         var tw = egret.Tween.get(this._player);
         tw.to({ x: this._targetX, y: this._targetY }, time).call(this._player.idle, this._player);

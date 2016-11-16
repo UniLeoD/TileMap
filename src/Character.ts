@@ -75,8 +75,8 @@ class PlayerMoveState extends PlayerState {
         this._targetY = temp.y * Tile.TILE_SIZE;
         console.log("target:" + Math.floor( this._targetX / Tile.TILE_SIZE) + " " +  Math.floor( this._targetY / Tile.TILE_SIZE));
     }
-    onEnter() {//TODO 
-        var time: number = (Math.sqrt(this._targetX * this._targetX + this._targetY * this._targetY));
+    onEnter() {
+        var time: number = (Math.sqrt((this._targetX - this._player.x) * (this._targetX - this._player.x)  + (this._targetY - this._player.y) * (this._targetY - this._player.y)));
         this._player.character.gotoAndPlay("run");
         var tw = egret.Tween.get(this._player);
         tw.to({ x: this._targetX, y: this._targetY }, time).call(
